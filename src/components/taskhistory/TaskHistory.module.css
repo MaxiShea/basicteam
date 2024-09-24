@@ -1,0 +1,23 @@
+.history {
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.history h2 {
+  margin-top: 0;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  padding: 5px 0;
+  /* border-bottom: 1px solid #eee; */
+}
+
+li:last-child {
+  border-bottom: none;
+}

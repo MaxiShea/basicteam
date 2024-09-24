@@ -1,0 +1,30 @@
+/* src/components/Filter/Filter.module.css */
+.filter {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.select {
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+h2 {
+  text-align: center;
+}
+
+.button {
+  padding: 8px 12px;
+  background-color: #0FA958;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #0b8844;
+}
