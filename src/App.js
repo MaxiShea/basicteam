@@ -5,6 +5,7 @@ import TaskItem from './components/taskitem/TaskItem';
 import Filter from './components/filter/Filter';
 import TaskHistory from './components/taskhistory/TaskHistory';
 import TagComponent from './components/tagcomponent/TagComponent';
+//import LogingSignup from './components/loging-signup/LogingSignup';
 
 import './App.css';
 
