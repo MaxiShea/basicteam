@@ -5,7 +5,7 @@ import TaskItem from './components/taskitem/TaskItem';
 import Filter from './components/filter/Filter';
 import TaskHistory from './components/taskhistory/TaskHistory';
 import TagComponent from './components/tagcomponent/TagComponent';
-//import LogingSignup from './components/loging-signup/LogingSignup';
+import LoginSignup from './components/login-signup/LoginSignup';
 
 import './App.css';
 
@@ -138,7 +138,12 @@ const App = () => {
   return (
     <div className="app-container">
       <Header />
+
       <main>
+        <section className="login-section">
+          <h2>Login / Registro</h2>
+          <LoginSignup />
+        </section>
         <section className="task-section">
           <h2>{editTask ? 'Editar tarea' : 'Crear nueva tarea'}</h2>
           <TaskForm onSave={handleSaveTask} editTask={editTask} />

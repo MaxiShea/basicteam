@@ -39,5 +39,5 @@ const LoginSignup = () => {
   );
 };
 
-export default Header;
+export default LoginSignup;
 
