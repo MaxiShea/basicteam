@@ -16,7 +16,20 @@ const App = () => {
   const [tags, setTags] = useState([]);
   const [editTask, setEditTask] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // Estado de autenticación
 
+  const handleLogin = ({ email }) => {
+    // Aquí puedes agregar tu lógica de autenticación
+    // Por ejemplo, una llamada a una API para validar el usuario
+    console.log('Login exitoso:', email);
+    setIsAuthenticated(true);
+  };
+
+  const handleLogout = () => {
+    // Lógica para cerrar sesión
+    console.log('Logout exitoso');
+    setIsAuthenticated(false);
+  };
 
   const handleSaveTask = (newTask) => {
     const taskExists = tasks.some(
@@ -136,51 +149,58 @@ const App = () => {
   };
 
   return (
-    <div className="app-container">
-      <Header />
-
+      <div className="app-container">
+    <Header 
+      isAuthenticated={isAuthenticated} 
+      onLogout={handleLogout} 
+      onLogin={handleLogin} 
+    />
       <main>
-        <section className="login-section">
-          <h2>Login / Registro</h2>
-          <LoginSignup />
-        </section>
-        <section className="task-section">
-          <h2>{editTask ? 'Editar tarea' : 'Crear nueva tarea'}</h2>
-          <TaskForm onSave={handleSaveTask} editTask={editTask} />
-          {errorMessage && <p className="error-message">{errorMessage}</p>}
-        </section>
+        {isAuthenticated ? (
+          // Mostrar contenido de la aplicación cuando el usuario está autenticado
+          <>
+            <section className="task-section">
+              <h2>{editTask ? 'Editar tarea' : 'Crear nueva tarea'}</h2>
+              <TaskForm onSave={handleSaveTask} editTask={editTask} />
+              {errorMessage && <p className="error-message">{errorMessage}</p>}
+            </section>
 
-        <section className="filter-section">
-          <h2>Filtrar tareas</h2>
-          <Filter onFilterChange={handleFilterChange} />
-        </section>
+            <section className="filter-section">
+              <h2>Filtrar tareas</h2>
+              <Filter onFilterChange={handleFilterChange} />
+            </section>
 
-        <section className="tasks-list">
-          <h2>Lista de Tareas</h2>
-          {(filteredTasks.length > 0 ? filteredTasks : tasks).map((task) => (
-            <TaskItem
-              key={task.id}
-              task={task}
-              onComplete={handleCompleteTask}
-              onEdit={handleEditTask}
-              onDelete={handleDeleteTask}
-            />
-          ))}
-        </section>
+            <section className="tasks-list">
+              <h2>Lista de Tareas</h2>
+              {(filteredTasks.length > 0 ? filteredTasks : tasks).map((task) => (
+                <TaskItem
+                  key={task.id}
+                  task={task}
+                  onComplete={handleCompleteTask}
+                  onEdit={handleEditTask}
+                  onDelete={handleDeleteTask}
+                />
+              ))}
+            </section>
 
-        <section className="tags-section">
-          <h2>Etiquetas</h2>
-          <TagComponent
-            tags={tags}
-            onTagAdd={handleAddTag}
-            onTagRemove={handleRemoveTag}
-          />
-        </section>
+            <section className="tags-section">
+              <h2>Etiquetas</h2>
+              <TagComponent
+                tags={tags}
+                onTagAdd={handleAddTag}
+                onTagRemove={handleRemoveTag}
+              />
+            </section>
 
-        <section className="history-section">
-          <h2>Historial de Cambios</h2>
-          <TaskHistory history={history} />
-        </section>
+            <section className="history-section">
+              <h2>Historial de Cambios</h2>
+              <TaskHistory history={history} />
+            </section>
+          </>
+        ) : (
+          // Mostrar el componente de Login/Registro si no está autenticado
+          <LoginSignup onLogin={handleLogin} />
+        )}
       </main>
     </div>
   );

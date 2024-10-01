@@ -2,98 +2,70 @@
     display: flex;
     flex-direction: column;
     margin: auto;
-    margin-top: 200px;
-    width: 600px;
-    background: #fff;
-    padding-bottom: 30px;
+    margin-top: 50px;
+    width: 400px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.header{
-    display: flex;
-    flex-direction: colum;
-    align-items: center;
-    gap: 9px;
-    width: 100%;
-    margin-top: 30px;
+.header {
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .text {
-    color: #2B2B2B;
-    font-size: 48px;
-    font-weight: 700;
+    font-size: 24px;
+    font-weight: bold;
 }
 
-.underline{
-    width: 61px;
-    height: 6px;
-    background: #2B2B2B;
-    border-radius: 9px;
+.underline {
+    height: 2px;
+    background: #000;
+    margin: 5px auto;
+    width: 50px;
 }
 
 .inputs {
-    margin-top: 55px;
     display: flex;
     flex-direction: column;
-    gap:25px;
 }
 
 .input {
     display: flex;
     align-items: center;
-    margin: auto;
-    width: 480px;
-    height: 80px;
-    background: #eaeaea;
-    border-radius: 6px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
 }
 
-input img {
-    margin: 0px 30px;
-}
-
-.input input {
-    height: 50px;
-    width: 400px;
-    background: transparent;
+input {
     border: none;
     outline: none;
-    color: #797979;
-    font-size: 19px;
+    flex: 1;
 }
 
-.forgot-password {
-    padding-left: 62px;
-    margin-top: 27px;
-    color: #797979;
-    font-size: 18px;
+.forgotPassword {
+    text-align: center;
+    margin-top: 10px;
 }
 
-.forgot-password span{
-    color: #4c00b4;
-    cursor: pointer;
-}
-
-.submit-container{
-    display:flex;
-    gap: 30px;
-    margin: 60px auto;
+.submitContainer {
+    display: flex;
+    justify-content: space-between;
 }
 
 .submit {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 220px;
-    height: 59px;
-    color: #fff;
-    background: #2B2B2B;
-    border-radius: 50px;
-    font-size: 19px;
-    font-weight: 700;
     cursor: pointer;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
 }
 
 .gray {
-    background: #eaeaea;
-    color: #797979;
+    background-color: #ccc;
 }
