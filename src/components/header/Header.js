@@ -1,3 +1,31 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import styles from './Header.module.css';
+
+const Header = () => {
+  return (
+    <header className={styles.header}>
+      <h1 className={styles.title}>Basic Team</h1>
+      <nav>
+        <ul className={styles.navList}>
+          <li className={styles.navItem}>
+            <Link to="/task">Task</Link>
+          </li>
+          <li className={styles.navItem}>
+            <Link to="/history">History</Link>
+          </li>
+          <li className={styles.navItem}>
+            <Link to="/users">Users</Link>
+          </li>
+        </ul>
+      </nav>
+    </header>
+  );
+};
+
+export default Header;
+
+
 /*import React from 'react';
 import styles from './Header.module.css';
 
@@ -22,8 +50,9 @@ const Header = () => {
   );
 };
 
-export default Header;*/
-
+export default Header;
+*/
+/*
 import React, { useState } from 'react';
 import styles from './Header.module.css';
 import LoginSignup from '../login-signup/LoginSignup';
@@ -73,4 +102,4 @@ const Header = ({ isAuthenticated, onLogout, onLogin }) => {
 
 export default Header;
 
-
+*/
