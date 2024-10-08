@@ -76,3 +76,7 @@ input {
 .gray {
     background-color: #ccc;
 }
+
+.submitContainer:last-child {
+    margin-top: 20px; /* Añade margen superior */
+}
