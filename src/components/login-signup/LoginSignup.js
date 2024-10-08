@@ -21,7 +21,7 @@ const LoginSignup = () => {
         try {
             if (action === "Login") {
                 // Lógica de autenticación (inicio de sesión)
-                const response = await axios.post("http://localhost:3000/clientes/clientes/login", {
+                const response = await axios.post("http://localhost:4000/usuarios/login", {
                     correoElectronico: email,
                     contrasenia: password,
                 });

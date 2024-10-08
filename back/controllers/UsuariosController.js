@@ -1,4 +1,5 @@
 import pool from '../config.js';
+import bcrypt from 'bcrypt';
 
 const UsuariosController = {
 
@@ -14,34 +15,38 @@ const UsuariosController = {
 
     crearUsuario: async (req, res) => {
         const { id_usuario, nombre, email, password, fecha_creacion } = req.body;
-        
+    
         try {
-        // Verificar si la tarea ya existe
-        const [existingTasks] = await pool.query(
-            "SELECT * FROM usuario WHERE id_usuario=?",
-            [id_usuario]
-        );
+            // Verificar si el usuario ya existe
+            const [existingUsers] = await pool.query(
+                "SELECT * FROM usuario WHERE email = ?",
+                [email]
+            );
     
-        if (existingTasks.length > 0) {
-            return res.status(400).json({ error: 'El usuario esta cargado.' });
-        }
+            if (existingUsers.length > 0) {
+                return res.status(400).json({ error: 'El usuario ya está registrado.' });
+            }
     
-        // Insertar la nueva tarea
-        const [result] = await pool.query(
-            "INSERT INTO usuario (id_usuario, nombre, email, password, fecha_creacion ) VALUES (?, ?, ?, ?, ?)",
-            [id_usuario, nombre, email, password, fecha_creacion]
-        );
+            // Cifrar la contraseña antes de guardar
+            const hashedPassword = await bcrypt.hash(password, 10); // 10 es el número de saltos (cost)
     
-        res.json({
-            id_usuario,
-            nombre,
-            email,
-            password,
-            fecha_creacion,
-        });
+            // Insertar el nuevo usuario con la contraseña cifrada
+            const [result] = await pool.query(
+                "INSERT INTO usuario (id_usuario, nombre, email, password, fecha_creacion) VALUES (?, ?, ?, ?, ?)",
+                [id_usuario, nombre, email, hashedPassword, fecha_creacion]
+            );
+    
+            res.json({
+                id_usuario,
+                nombre,
+                email,
+                // No devuelvas la contraseña cifrada por razones de seguridad
+                fecha_creacion,
+                message: 'Usuario creado exitosamente.'
+            });
         } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Error al crear el usuario.' });
+            console.error('Error al crear el usuario:', error);
+            res.status(500).json({ error: 'Error al crear el usuario.' });
         }
     },
 
@@ -103,8 +108,52 @@ const UsuariosController = {
             }
             },
             
+            loginUsuario: async (req, res) => {
+                const { email, password } = req.body;
+            
+                try {
+                    // Imprimir el email que estás buscando
+                    console.log("Email ingresado:", email);
+                    
+                    // Buscar el usuario por email
+                    const [usuarios] = await pool.query("SELECT * FROM usuario WHERE email = ?", [email]);
+                    
+                    // Imprimir el resultado de la consulta
+                    console.log("Usuario encontrado:", usuarios);
+            
+                    if (usuarios.length === 0) {
+                        return res.status(404).json({ success: false, message: 'Usuario no encontrado' });
+                    }
+            
+                    const usuario = usuarios[0];
+            
+                    // Comparar las contraseñas
+                    const isMatch = await bcrypt.compare(password, usuario.password);
+            
+                    if (!isMatch) {
+                        return res.status(401).json({ success: false, message: 'Contraseña incorrecta' });
+                    }
+            
+                    // Si la contraseña es correcta, retornar la respuesta exitosa
+                    res.json({
+                        success: true,
+                        message: 'Inicio de sesión exitoso',
+                        usuario: {
+                            id_usuario: usuario.id_usuario,
+                            nombre: usuario.nombre,
+                            email: usuario.email,
+                            // Puedes incluir más información del usuario si lo deseas
+                        }
+                    });
+                } catch (error) {
+                    console.error('Error al iniciar sesión:', error);
+                    res.status(500).json({ success: false, message: 'Error en el servidor' });
+                }
+            }            
+        
    
 };
+
 
 
 
