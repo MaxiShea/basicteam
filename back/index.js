@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import routerTareas from './routes/routerTareas.js';
 import routerUsuarios from './routes/routerUsuarios.js';
+import routerListas from './routes/routerListas.js';
 
 // Cargar variables de entorno
 dotenv.config();
@@ -28,6 +29,7 @@ app.use(morgan('dev'));
 // Rutas
 app.use('/tareas', routerTareas);
 app.use('/usuarios', routerUsuarios);
+app.use('/listas', routerListas);
 
 // Servir archivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
