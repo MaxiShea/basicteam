@@ -14,34 +14,32 @@ const LoginSignup = () => {
     const [name, setName] = useState(""); // Estado para el nombre (solo usado en Sign Up)
     const navigate = useNavigate(); // Para redirigir al usuario después de login o registro
 
-    // Manejo del envío del formulario
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
+    const handleSubmit = async () => {
+    
         try {
             if (action === "Login") {
                 // Lógica de autenticación (inicio de sesión)
-                const response = await axios.post("http://localhost:4000/usuarios/login", {
-                    correoElectronico: email,
-                    contrasenia: password,
+                const response = await axios.post("http://localhost:4000/usuarios/login", { // Cambia a puerto 4000
+                    email: email,
+                    password: password,
                 });
-
+    
                 const data = response.data;
                 if (data.success) {
                     alert("Inicio de sesión exitoso");
-                    navigate('/app'); // Redirige a la página principal de la aplicación
+                    navigate('/task'); // Redirige a la página principal de la aplicación
                 } else {
                     alert(data.message || "Error de autenticación");
                 }
             } else if (action === "Sign Up") {
                 // Lógica de registro
-                const response = await axios.post("http://localhost:3000/crearUsuario", {
+                const response = await axios.post("http://localhost:4000/crearUsuario", {
                     nombre: name,
                     email: email,
                     password: password,
                     fecha_creacion: new Date(), // Envía la fecha actual
                 });
-
+    
                 const data = response.data;
                 if (data.success) {
                     alert("Registro exitoso");
@@ -54,8 +52,8 @@ const LoginSignup = () => {
             console.error("Error en la autenticación:", error);
             alert("Ocurrió un error. Inténtelo de nuevo.");
         }
-    };
-
+    };    
+    
     return (
         <div className={styles.container}>
             <div className={styles.header}>

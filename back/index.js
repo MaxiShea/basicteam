@@ -12,14 +12,16 @@ import routerListas from './routes/routerListas.js';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3000; 
+const PORT = process.env.PORT || 3000;
+
 
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: 'http://localhost:3000',
+  credentials: true,
 }));
 
 // Middleware para analizar JSON

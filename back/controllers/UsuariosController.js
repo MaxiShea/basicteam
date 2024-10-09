@@ -112,14 +112,8 @@ const UsuariosController = {
                 const { email, password } = req.body;
             
                 try {
-                    // Imprimir el email que estás buscando
-                    console.log("Email ingresado:", email);
                     
-                    // Buscar el usuario por email
                     const [usuarios] = await pool.query("SELECT * FROM usuario WHERE email = ?", [email]);
-                    
-                    // Imprimir el resultado de la consulta
-                    console.log("Usuario encontrado:", usuarios);
             
                     if (usuarios.length === 0) {
                         return res.status(404).json({ success: false, message: 'Usuario no encontrado' });
