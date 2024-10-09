@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; // Importamos react-router-dom
+import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom'; // Importamos react-router-dom
+
 import Header from './components/header/Header';
 import TaskForm from './components/taskform/TaskForm';
 import TaskItem from './components/taskitem/TaskItem';
@@ -17,10 +18,14 @@ const App = () => {
   const [editTask, setEditTask] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false); // Estado de autenticación
+  const navigate = useNavigate();
+
 
   const handleLogin = ({ email }) => {
     console.log('Login exitoso:', email);
     setIsAuthenticated(true);
+    console.log('Autenticado:', isAuthenticated);  // Verifica el cambio de estado
+    navigate('/');  // Redirige a la raíz donde están las funcionalidades
   };
 
   const handleLogout = () => {
@@ -136,6 +141,8 @@ const App = () => {
   const handleRemoveTag = (tagToRemove) => {
     setTags((prevTags) => prevTags.filter((tag) => tag !== tagToRemove));
   };
+
+  console.log('Valor de isAuthenticated:', isAuthenticated);
 
   return (
     <Router>
