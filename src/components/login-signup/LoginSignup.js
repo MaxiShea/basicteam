@@ -11,7 +11,7 @@ const LoginSignup = () => {
     const [action, setAction] = useState("Login"); // Modo de acción, ya sea Login o Sign Up
     const [email, setEmail] = useState(""); // Estado para el email
     const [password, setPassword] = useState(""); // Estado para la contraseña
-    const [name, setName] = useState(""); // Estado para el nombre (solo usado en Sign Up)
+    const [nombre, setNombre] = useState(""); // Estado para el nombre (solo usado en Sign Up)
     const navigate = useNavigate(); // Para redirigir al usuario después de login o registro
 
     const handleSubmit = async () => {
@@ -33,11 +33,10 @@ const LoginSignup = () => {
                 }
             } else if (action === "Sign Up") {
                 // Lógica de registro
-                const response = await axios.post("http://localhost:4000/crearUsuario", {
-                    nombre: name,
+                const response = await axios.post("http://localhost:4000/usuarios/crearUsuario", {
+                    nombre: nombre,
                     email: email,
                     password: password,
-                    fecha_creacion: new Date(), // Envía la fecha actual
                 });
     
                 const data = response.data;
@@ -67,8 +66,8 @@ const LoginSignup = () => {
                         <input
                             type='text'
                             placeholder='Name'
-                            value={name}
-                            onChange={(e) => setName(e.target.value)} // Actualiza el estado del nombre
+                            value={nombre}
+                            onChange={(e) => setNombre(e.target.value)} // Actualiza el estado del nombre
                             required
                         />
                     </div>

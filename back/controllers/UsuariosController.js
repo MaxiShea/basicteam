@@ -14,7 +14,7 @@ const UsuariosController = {
     },
 
     crearUsuario: async (req, res) => {
-        const { id_usuario, nombre, email, password, fecha_creacion } = req.body;
+        const { nombre, email, password } = req.body; // Eliminar 'fecha_creacion' ya que se generará automáticamente
     
         try {
             // Verificar si el usuario ya existe
@@ -30,25 +30,22 @@ const UsuariosController = {
             // Cifrar la contraseña antes de guardar
             const hashedPassword = await bcrypt.hash(password, 10); // 10 es el número de saltos (cost)
     
-            // Insertar el nuevo usuario con la contraseña cifrada
+            // Insertar el nuevo usuario sin la fecha, que será generada automáticamente
             const [result] = await pool.query(
-                "INSERT INTO usuario (id_usuario, nombre, email, password, fecha_creacion) VALUES (?, ?, ?, ?, ?)",
-                [id_usuario, nombre, email, hashedPassword, fecha_creacion]
+                "INSERT INTO usuario (nombre, email, password) VALUES (?, ?, ?)", // Sin 'fecha_creacion'
+                [nombre, email, hashedPassword]
             );
     
             res.json({
-                id_usuario,
                 nombre,
                 email,
-                // No devuelvas la contraseña cifrada por razones de seguridad
-                fecha_creacion,
                 message: 'Usuario creado exitosamente.'
             });
         } catch (error) {
             console.error('Error al crear el usuario:', error);
             res.status(500).json({ error: 'Error al crear el usuario.' });
         }
-    },
+    },    
 
     borrarUsuario: async (req, res) =>{
         const { id_usuario } = req.body;
