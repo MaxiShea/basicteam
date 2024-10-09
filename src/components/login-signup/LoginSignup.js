@@ -27,7 +27,7 @@ const LoginSignup = () => {
                 const data = response.data;
                 if (data.success) {
                     alert("Inicio de sesión exitoso");
-                    navigate('/task'); // Redirige a la página principal de la aplicación
+                    navigate('/TaskForm'); // Redirige a la página principal de la aplicación
                 } else {
                     alert(data.message || "Error de autenticación");
                 }
