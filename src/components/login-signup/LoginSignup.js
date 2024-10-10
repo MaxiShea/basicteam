@@ -14,7 +14,8 @@ const LoginSignup = ({ onLogin }) => {
     const [nombre, setNombre] = useState(""); // Estado para el nombre (solo usado en Sign Up)
     const navigate = useNavigate(); // Para redirigir al usuario después de login o registro
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault(); // Prevenir el comportamiento por defecto del formulario
     
         try {
             if (action === "Login") {

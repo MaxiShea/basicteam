@@ -145,7 +145,6 @@ const App = () => {
   console.log('Valor de isAuthenticated:', isAuthenticated);
 
   return (
-    <Router>
       <div className="app-container">
         <Header isAuthenticated={isAuthenticated} onLogout={handleLogout} onLogin={handleLogin} />
         <main>
@@ -200,7 +199,6 @@ const App = () => {
           </Routes>
         </main>
       </div>
-    </Router>
   );
 };
 
