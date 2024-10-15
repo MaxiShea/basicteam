@@ -52,8 +52,13 @@ const LoginSignup = ({ onLogin }) => {
                 }
             }
         } catch (error) {
-            console.error("Error en la autenticación:", error);
-            alert("Ocurrió un error. Inténtelo de nuevo.");
+           // Aquí el error del backend es capturado
+            if (error.response && error.response.status === 400) {
+                alert(error.response.data.error); // Mostrar el mensaje del backend
+            } else {
+                console.error("Error en la autenticación:", error);
+                alert("Ocurrió un error. Inténtelo de nuevo.");
+            }
         }
     };    
     
