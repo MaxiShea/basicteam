@@ -11,7 +11,7 @@ const Profile = ({ user }) => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`http://localhost:4000/usuarios/${user.id_usuario}`, {
+      const response = await axios.put(`http://localhost:4000/actualizarUsuario/${user.id_usuario}`, {
         nombre,
         email,
         password
@@ -29,7 +29,7 @@ const Profile = ({ user }) => {
 
   const handleDelete = async () => {
     try {
-      const response = await axios.delete(`http://localhost:4000/usuarios/${user.id_usuario}`);
+      const response = await axios.delete(`http://localhost:4000/borrarUsuarios/${user.id_usuario}`);
       if (response.data.success) {
         alert("Perfil eliminado exitosamente");
         // Aquí podrías hacer un logout y redirigir al usuario
