@@ -8,6 +8,7 @@ import Filter from './components/filter/Filter';
 import TaskHistory from './components/taskhistory/TaskHistory';
 import TagComponent from './components/tagcomponent/TagComponent';
 import LoginSignup from './components/login-signup/LoginSignup';
+import Profile from './components/profile/Profile'; // Importa el componente
 import './App.css';
 
 const App = () => {
@@ -18,20 +19,26 @@ const App = () => {
   const [editTask, setEditTask] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false); // Estado de autenticación
+  const [currentUser, setCurrentUser] = useState(null); // Estado para el usuario actual
+
   const navigate = useNavigate();
 
+    // Función para manejar el login
+    const handleLogin = ({ email }) => {
+      console.log('Login exitoso:', email);
+      setIsAuthenticated(true);
+      setCurrentUser({ email }); // Guardamos al usuario actual en el estado
+      navigate('/');  // Redirige a la raíz donde están las funcionalidades
+    };
+  
+    // Función para manejar el logout
+    const handleLogout = () => {
+      console.log('Logout exitoso');
+      setIsAuthenticated(false);
+      setCurrentUser(null); // Limpiamos el estado del usuario actual
+      navigate('/'); // Redirige a la página principal
+    };
 
-  const handleLogin = ({ email }) => {
-    console.log('Login exitoso:', email);
-    setIsAuthenticated(true);
-    console.log('Autenticado:', isAuthenticated);  // Verifica el cambio de estado
-    navigate('/');  // Redirige a la raíz donde están las funcionalidades
-  };
-
-  const handleLogout = () => {
-    console.log('Logout exitoso');
-    setIsAuthenticated(false);
-  };
 
   const handleSaveTask = (newTask) => {
     const taskExists = tasks.some(
@@ -147,8 +154,13 @@ const App = () => {
   return (
       <div className="app-container">
         {/* Mostrar el Header solo si el usuario está autenticado */}
-        {isAuthenticated && <Header isAuthenticated={isAuthenticated} onLogout={handleLogout} />}
-        
+        {isAuthenticated && (
+        <Header
+          isAuthenticated={isAuthenticated}
+          onLogout={handleLogout}
+          currentUser={currentUser} // Pasar el usuario actual al Header si es necesario
+        />
+      )}        
         <main>
           <Routes>
             <Route
@@ -198,6 +210,7 @@ const App = () => {
             <Route path="/task" element={<TaskForm />} />
             <Route path="/history" element={<TaskHistory />} />
             <Route path="/users" element={<LoginSignup onLogin={handleLogin} />} />
+            <Route path="/profile" element={<Profile user={currentUser} />} />
           </Routes>
         </main>
       </div>
