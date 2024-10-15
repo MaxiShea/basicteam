@@ -24,7 +24,7 @@ const UsuariosController = {
             );
     
             if (existingUsers.length > 0) {
-                return res.status(400).json({ error: 'El usuario ya está registrado.' });
+                return res.status(400).json({ success: false, error: 'El usuario ya está registrado.' });
             }
     
             // Cifrar la contraseña antes de guardar
@@ -36,14 +36,14 @@ const UsuariosController = {
                 [nombre, email, hashedPassword]
             );
     
-            res.json({
-                nombre,
-                email,
-                message: 'Usuario creado exitosamente.'
+            res.status(201).json({
+                success: true, // Aquí se añade el campo success
+                message: 'Usuario creado exitosamente.',
+                usuario: { nombre, email }
             });
         } catch (error) {
             console.error('Error al crear el usuario:', error);
-            res.status(500).json({ error: 'Error al crear el usuario.' });
+            res.status(500).json({ success: false, error: 'Error al crear el usuario.' });
         }
     },    
 
