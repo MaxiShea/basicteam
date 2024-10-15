@@ -146,7 +146,9 @@ const App = () => {
 
   return (
       <div className="app-container">
-        <Header isAuthenticated={isAuthenticated} onLogout={handleLogout} onLogin={handleLogin} />
+        {/* Mostrar el Header solo si el usuario está autenticado */}
+        {isAuthenticated && <Header isAuthenticated={isAuthenticated} onLogout={handleLogout} />}
+        
         <main>
           <Routes>
             <Route
