@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; // Importamos react-router-dom
+import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom'; // Importamos react-router-dom
+
 import Header from './components/header/Header';
 import TaskForm from './components/taskform/TaskForm';
 import TaskItem from './components/taskitem/TaskItem';
@@ -7,6 +8,7 @@ import Filter from './components/filter/Filter';
 import TaskHistory from './components/taskhistory/TaskHistory';
 import TagComponent from './components/tagcomponent/TagComponent';
 import LoginSignup from './components/login-signup/LoginSignup';
+import Profile from './components/profile/Profile'; // Importa el componente
 import './App.css';
 
 const App = () => {
@@ -17,16 +19,26 @@ const App = () => {
   const [editTask, setEditTask] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false); // Estado de autenticación
+  const [currentUser, setCurrentUser] = useState(null); // Estado para el usuario actual
 
-  const handleLogin = ({ email }) => {
-    console.log('Login exitoso:', email);
-    setIsAuthenticated(true);
-  };
+  const navigate = useNavigate();
 
-  const handleLogout = () => {
-    console.log('Logout exitoso');
-    setIsAuthenticated(false);
-  };
+    // Función para manejar el login
+    const handleLogin = ({ email }) => {
+      console.log('Login exitoso:', email);
+      setIsAuthenticated(true);
+      setCurrentUser({ email }); // Guardamos al usuario actual en el estado
+      navigate('/');  // Redirige a la raíz donde están las funcionalidades
+    };
+  
+    // Función para manejar el logout
+    const handleLogout = () => {
+      console.log('Logout exitoso');
+      setIsAuthenticated(false);
+      setCurrentUser(null); // Limpiamos el estado del usuario actual
+      navigate('/'); // Redirige a la página principal
+    };
+
 
   const handleSaveTask = (newTask) => {
     const taskExists = tasks.some(
@@ -137,10 +149,18 @@ const App = () => {
     setTags((prevTags) => prevTags.filter((tag) => tag !== tagToRemove));
   };
 
+  console.log('Valor de isAuthenticated:', isAuthenticated);
+
   return (
-    <Router>
       <div className="app-container">
-        <Header isAuthenticated={isAuthenticated} onLogout={handleLogout} onLogin={handleLogin} />
+        {/* Mostrar el Header solo si el usuario está autenticado */}
+        {isAuthenticated && (
+        <Header
+          isAuthenticated={isAuthenticated}
+          onLogout={handleLogout}
+          currentUser={currentUser} // Pasar el usuario actual al Header si es necesario
+        />
+      )}        
         <main>
           <Routes>
             <Route
@@ -190,10 +210,10 @@ const App = () => {
             <Route path="/task" element={<TaskForm />} />
             <Route path="/history" element={<TaskHistory />} />
             <Route path="/users" element={<LoginSignup onLogin={handleLogin} />} />
+            <Route path="/profile" element={<Profile user={currentUser} />} />
           </Routes>
         </main>
       </div>
-    </Router>
   );
 };
 

@@ -7,14 +7,15 @@ import user_icon from '../Assets/user.png';
 import email_icon from '../Assets/email.png';
 import password_icon from '../Assets/password.png';
 
-const LoginSignup = () => {
+const LoginSignup = ({ onLogin }) => {
     const [action, setAction] = useState("Login"); // Modo de acción, ya sea Login o Sign Up
     const [email, setEmail] = useState(""); // Estado para el email
     const [password, setPassword] = useState(""); // Estado para la contraseña
     const [nombre, setNombre] = useState(""); // Estado para el nombre (solo usado en Sign Up)
     const navigate = useNavigate(); // Para redirigir al usuario después de login o registro
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault(); // Prevenir el comportamiento por defecto del formulario
     
         try {
             if (action === "Login") {
@@ -26,8 +27,10 @@ const LoginSignup = () => {
     
                 const data = response.data;
                 if (data.success) {
-                    alert("Inicio de sesión exitoso");
-                    navigate('/task'); // Redirige a la página principal de la aplicación
+                    //alert("Inicio de sesión exitoso");
+                    onLogin({ email });
+                    console.log('Redirigiendo a /App');
+                    navigate('/'); // Redirige a la página principal de la aplicación
                 } else {
                     alert(data.message || "Error de autenticación");
                 }
@@ -37,6 +40,7 @@ const LoginSignup = () => {
                     nombre: nombre,
                     email: email,
                     password: password,
+                    fecha_creacion: new Date(),
                 });
     
                 const data = response.data;
@@ -48,8 +52,13 @@ const LoginSignup = () => {
                 }
             }
         } catch (error) {
-            console.error("Error en la autenticación:", error);
-            alert("Ocurrió un error. Inténtelo de nuevo.");
+           // Aquí el error del backend es capturado
+            if (error.response && error.response.status === 400) {
+                alert(error.response.data.error); // Mostrar el mensaje del backend
+            } else {
+                console.error("Error en la autenticación:", error);
+                alert("Ocurrió un error. Inténtelo de nuevo.");
+            }
         }
     };    
     
