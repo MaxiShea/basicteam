@@ -18,6 +18,9 @@ const Header = ({ isAuthenticated }) => {
       <h1 className={styles.title}>Basic Team</h1>
       <nav>
         <ul className={styles.navList}>
+        <li className="navItem">
+            <Link to="/app">App</Link> 
+          </li>
           <li className={styles.navItem}>
             <Link to="/task">Task</Link>
           </li>
