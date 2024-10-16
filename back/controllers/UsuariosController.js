@@ -107,6 +107,7 @@ const UsuariosController = {
 
            
             actualizarUsuario : async (req, res) => {
+                console.log(req.body); // Muestra los datos recibidos desde el frontend////
                 const { id } = req.params;
                 const { id_usuario, nombre, email, password } = req.body;
             
@@ -133,15 +134,16 @@ const UsuariosController = {
                     await pool.query('UPDATE usuario SET nombre=?, email=? WHERE id_usuario=?', [nombre, email, id_usuario]);
                     }
                 
-                    res.json({
-                    success: true,
-                    message: 'Perfil actualizado exitosamente',
-                    user: {
-                        id_usuario,
-                        nombre,
-                        email
-                    }
+                    res.status(200).json({
+                        success: true,
+                        message: 'Perfil actualizado exitosamente',
+                        user: {
+                            id_usuario,
+                            nombre,
+                            email
+                        }
                     });
+                    
                 
                 } catch (error) {
                     console.error('Error al actualizar el usuario:', error);
