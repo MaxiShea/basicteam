@@ -1,8 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './Header.module.css';
 
-const Header = () => {
+const Header = ({ isAuthenticated }) => {
+  const navigate = useNavigate();
+
+  const handleUserClick = () => {
+    if (isAuthenticated) {
+      navigate('/profile'); // Redirige a la página de perfil
+    } else {
+      navigate('/users'); // Redirige a login/signup si no está autenticado
+    }
+  };
+
   return (
     <header className={styles.header}>
       <h1 className={styles.title}>Basic Team</h1>
@@ -15,7 +25,9 @@ const Header = () => {
             <Link to="/history">History</Link>
           </li>
           <li className={styles.navItem}>
-            <Link to="/users">Users</Link>
+            <button onClick={handleUserClick} className={styles.navButton}>
+              User
+            </button>
           </li>
         </ul>
       </nav>
