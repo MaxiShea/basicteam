@@ -9,6 +9,7 @@ const TareasController = {
         } catch (error) {
           console.error('Error al obtener los usuarios:', error);
           res.status(500).json({ error: 'Error al obtener los usuarios' });
+          
         }
       },
 
