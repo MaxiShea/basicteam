@@ -66,9 +66,9 @@ const Profile = () => {
   };
 
    // Si `user` no está definido, puedes mostrar un loader o un mensaje
-   if (!usuario) {
+   /*if (!usuario) {
     return <div>Cargando...</div>;
-   }
+   }*/
 
   const handleDelete = async () => {
     try {
