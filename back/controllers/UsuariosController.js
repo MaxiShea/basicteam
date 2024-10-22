@@ -71,7 +71,7 @@ const UsuariosController = {
                 }
             },
 
-    actualizarUsuario: async (req, res) => {
+    /*actualizarUsuario: async (req, res) => {
             const { id_usuario, nombre, email, password } = req.body;
               try {
                 if (!nombre || !email || !password) {
@@ -103,7 +103,55 @@ const UsuariosController = {
                 console.error('Error al actualizar el usuario:', error);
                 res.status(500).json({ mensaje: "Error al actualizar el usuario" });
             }
-            },
+            },*/
+
+           
+            actualizarUsuario : async (req, res) => {
+                console.log(req.body); // Muestra los datos recibidos desde el frontend////
+                const { id } = req.params;
+                const { id_usuario, nombre, email, password } = req.body;
+            
+                try {
+                    // Validar si los campos requeridos están presentes
+                    if (!nombre || !email) {
+                    return res.status(400).json({ error: 'Faltan datos requeridos' });
+                    }
+                
+                    // Verificar si el usuario existe en la base de datos
+                    const result = await pool.query('SELECT * FROM usuario WHERE id_usuario = ?', [id_usuario]);
+                    const user = result[0][0]; // Ajuste para obtener el primer resultado de la consulta
+                
+                    if (!user) {
+                    return res.status(404).json({ error: 'Usuario no encontrado o está inactivo' });
+                    }
+                
+                    // Si se proporciona una nueva contraseña, encriptarla antes de actualizar
+                    if (password) {
+                    const hashedPassword = await bcrypt.hash(password, 10); // Encripta la contraseña
+                    await pool.query('UPDATE usuario SET nombre=?, email=?, password=? WHERE id_usuario=?', [nombre, email, hashedPassword, id_usuario]);
+                    } else {
+                    // Si no hay nueva contraseña, solo actualizar nombre y email
+                    await pool.query('UPDATE usuario SET nombre=?, email=? WHERE id_usuario=?', [nombre, email, id_usuario]);
+                    }
+                
+                    res.status(200).json({
+                        success: true,
+                        message: 'Perfil actualizado exitosamente',
+                        user: {
+                            id_usuario,
+                            nombre,
+                            email
+                        }
+                    });
+                    
+                
+                } catch (error) {
+                    console.error('Error al actualizar el usuario:', error);
+                    res.status(500).json({ mensaje: 'Error al actualizar el usuario' });
+                }
+                },
+                
+        
             
             loginUsuario: async (req, res) => {
                 const { email, password } = req.body;

@@ -22,10 +22,13 @@ const Header = ({ isAuthenticated }) => {
             <Link to="/app">App</Link> 
           </li>
           <li className={styles.navItem}>
-            <Link to="/task">Task</Link>
+            <Link to="/">App</Link>
           </li>
           <li className={styles.navItem}>
             <Link to="/history">History</Link>
+          </li>
+          <li className={styles.navItem}>
+            <Link to="/task">Task</Link>
           </li>
           <li className={styles.navItem}>
             <button onClick={handleUserClick} className={styles.navButton}>

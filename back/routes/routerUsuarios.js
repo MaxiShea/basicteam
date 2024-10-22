@@ -7,5 +7,5 @@ router.post('/login', UsuariosController.loginUsuario);
 router.post('/crearUsuario', UsuariosController.crearUsuario);
 router.get('/obtenerUsuarios', UsuariosController.getAllsuarios);
 router.delete('/borrarUsuario',UsuariosController.borrarUsuario);
-router.put("/actualizarUsuario", UsuariosController.actualizarUsuario);
+router.put("/actualizarUsuario/:id", UsuariosController.actualizarUsuario);
 export default router;
