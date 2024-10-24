@@ -76,7 +76,7 @@ const App = () => {
       {
         action: editTask ? 'Tarea editada' : 'Tarea creada',
         date: new Date().toLocaleString(),
-        user: 'Admin',
+        user: currentUser ? currentUser.email : 'Admin',
       },
     ]);
   };
@@ -93,7 +93,7 @@ const App = () => {
       {
         action: 'Tarea completada',
         date: new Date().toLocaleString(),
-        user: 'Admin',
+        user: currentUser ? currentUser.email : 'Admin',
       },
     ]);
   };
@@ -112,7 +112,7 @@ const App = () => {
       {
         action: 'Tarea eliminada',
         date: new Date().toLocaleString(),
-        user: 'Admin',
+        user: currentUser ? currentUser.email : 'Admin', // en vez de admin me tiene que aparecer el nombre del usuario
       },
     ]);
   };

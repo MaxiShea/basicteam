@@ -16,7 +16,7 @@ const Profile = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const id_usuario = '1'; // Aquí deberías usar el ID real del usuario, tal vez sacado del contexto o del estado global
+  const id_usuario = '4'; // Aquí deberías usar el ID real del usuario, tal vez sacado del contexto o del estado global
 
     // Efecto para obtener los datos del usuario al cargar el componente
   useEffect(() => {
