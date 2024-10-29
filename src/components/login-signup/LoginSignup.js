@@ -16,6 +16,12 @@ const LoginSignup = ({ onLogin }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevenir el comportamiento por defecto del formulario
+
+                // Verifica que currentUser no sea null
+        if (!currentUser || !currentUser.id_usuario) {
+            console.error("Usuario no autenticado. No se puede actualizar el perfil.");
+            return; // Salir si currentUser es null o no tiene id_usuario
+        }
     
         try {
             if (action === "Login") {
